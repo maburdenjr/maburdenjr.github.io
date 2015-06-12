@@ -10,6 +10,7 @@ var formHelpers = {}
 var twitchApi = {
     baseUrl: 'https://api.twitch.tv/kraken/'
 };
+var xhrRequest;
 
 
 
@@ -44,6 +45,10 @@ twitchApi.search = function () {
     psnUserInterface.fadeOut('introScreen');
     psnUserInterface.fadeOut('errorMessage');
     console.log(apiUrl);
+}
+
+twitchApi.ajaxRequest = function() {
+
 }
 
 /* UI Methods */
