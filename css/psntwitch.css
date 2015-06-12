@@ -8,12 +8,10 @@ html {
 }
 body {
     margin: 0;
-    background-image: url('../images/background.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: right bottom;
+
     font-family: 'Open Sans', sans-serif;
     font-size: 13px;
+    background-color: #000E43;
 }
 
 a {

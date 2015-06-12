@@ -48,14 +48,6 @@ twitchApi.search = function () {
     }
 }
 
-twitchApi.paginate = function (apiURL) {
-    var apiResponse = twitchApi.jsonp(apiUrl+"&callback=jsonpCallback");
-    if (!apiResponse) {
-        psnUserInterface.displayError('An unknown error occurred. Please try again.');
-        return;
-    }
-}
-
 twitchApi.jsonp = function (apiUrl) {
     var head = document.head;
     var script = document.createElement("script");
@@ -71,12 +63,13 @@ twitchApi.processResponse = function (data) {
     var error = twitchData.error;
     var total = twitchData._total;
     var links = twitchData._links;
+    var streams = twitchData.streams;
     if (!error && (total > 0)) {
         psnUserInterface.fadeOut('introScreen');
         psnUserInterface.fadeOut('errorMessage');
         psnUserInterface.fadeOut('resultsView');
         psnUserInterface.fadeIn('loadingResults');
-        psnUserInterface.buildResults(twitchData, total, links)
+        psnUserInterface.buildResults(twitchData, total, links, streams)
 
     } else {
         psnUserInterface.fadeOut('loadingResults');
@@ -85,7 +78,7 @@ twitchApi.processResponse = function (data) {
 }
 
 /* UI Methods */
-psnUserInterface.buildResults = function (twitchData, total, links) {
+psnUserInterface.buildResults = function (twitchData, total, links, streams) {
     var elTotal = document.getElementById('resultsTotal');
     var elPagination = document.getElementById('resultsPagination');
     var nextLink = links.next;
@@ -93,26 +86,80 @@ psnUserInterface.buildResults = function (twitchData, total, links) {
     var paginationHTML = "";
     elTotal.innerHTML = "Total results: "+total;
 
-    if (typeof prevLink !== 'undefined') { paginationHTML += "<a id='prevBtn' class='pagination' href='"+links.prev+"'>Previous</a>"; }
-    if (typeof nextLink !== 'undefined') { paginationHTML += "<a id='nextBtn' class='pagination' href='"+links.next+"'>Next</a>"; }
+    if (typeof prevLink !== 'undefined') { paginationHTML += "&laquo; <a id='prevBtn' class='pagination' href='"+links.prev+"'>Previous</a> "; }
+    if (typeof nextLink !== 'undefined' && streams.length) { paginationHTML += " <a id='nextBtn' class='pagination' href='"+links.next+"'>Next</a> &raquo;"; }
 
     elPagination.innerHTML = paginationHTML;
     psnUserInterface.initPaginateClick('nextBtn');
     psnUserInterface.initPaginateClick('prevBtn');
-    setTimeout(function(){ psnUserInterface.fadeOut('loadingResults'); psnUserInterface.fadeIn('resultsView');}, 2000);
+    document.getElementById('resultsContainer').innerHTML = "";
+
+    for (var key in streams) {
+        if (streams.hasOwnProperty(key)) {
+            var obj = streams[key];
+            psnUserInterface.displayStreamInfo(obj);
+        }
+    }
+    setTimeout(function(){ psnUserInterface.fadeOut('loadingResults'); psnUserInterface.fadeIn('resultsView');}, 1000);
+}
+
+psnUserInterface.displayStreamInfo = function (streamObj) {
+    var resultsContainer = document.getElementById('resultsContainer');
+    var twitchImage = streamObj.preview.medium;
+    var twitchStreamName = streamObj.channel.status;
+    var twitchGame = streamObj.game;
+    var twitchViewers = streamObj.viewers;
+    var twitchURL = streamObj.channel.url;
+    var twitchInfo = streamObj.channel.display_name + " playing " + twitchGame + " [" + twitchViewers + " viewers]";
+
+
+    //Twitch Link
+    var streamLink = document.createElement("A");
+    streamLink.setAttribute('href', twitchURL);
+    streamLink.setAttribute('target', '_blank');
+
+    var streamContainer = document.createElement("DIV");
+    streamContainer.setAttribute("id", streamObj._id);
+    streamContainer.setAttribute("class", 'streamContainer');
+
+    var streamTitle = document.createElement("H2");
+    streamTitle.innerText = twitchStreamName;
+
+    var streamImageContainer = document.createElement("DIV");
+    streamImageContainer.setAttribute("class", 'streamImage');
+
+    var streamDetails = document.createElement("DIV");
+    streamDetails.setAttribute("class", "streamDetails");
+    streamDetails.innerText = twitchInfo;
+
+    var streamImage = document.createElement("IMG");
+    streamImage.setAttribute('src', twitchImage);
+    streamLink.appendChild(streamImage);
+    streamImageContainer.appendChild(streamLink);
+
+    streamContainer.appendChild(streamTitle);
+    streamContainer.appendChild(streamDetails);
+    streamContainer.appendChild(streamImageContainer)
+    resultsContainer.appendChild(streamContainer);
 }
 
 psnUserInterface.initPaginateClick = function (btnID) {
     var btn = document.getElementById(btnID);
     if (btn) {
         btn.addEventListener('click', function(event) { event.preventDefault()});
-        btn.addEventListener('click', psnUserInterface.paginationClick(btnID));
+        btn.addEventListener('click', function(){
+            psnUserInterface.paginationClick(btnID)
+        });
     }
 }
 
 psnUserInterface.paginationClick = function (btnID) {
     var paginateApiUrl = document.getElementById(btnID).getAttribute('href');
-    console.log(paginateApiUrl);
+    var apiResponse = twitchApi.jsonp(paginateApiUrl+"&callback=jsonpCallback");
+    if (!apiResponse) {
+        psnUserInterface.displayError('An unknown error occurred. Please try again.');
+        return;
+    }
 }
 
 psnUserInterface.initSearch = function (query) {
@@ -123,16 +170,9 @@ psnUserInterface.initSearch = function (query) {
 
 psnUserInterface.fadeOut = function (elID) {
     var element = document.getElementById(elID);
-    var op = 1;  // initial opacity
-    var timer = setInterval(function () {
-        if (op <= 0.1){
-            clearInterval(timer);
-            element.style.display = 'none';
-        }
-        element.style.opacity = op;
-        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-        op -= op * 0.1;
-    }, 1);
+    element.style.display = 'none';
+    element.style.opacity = 0;
+    element.style.filter = 'alpha(opacity=0)';
 }
 psnUserInterface.fadeIn = function (elID) {
     var element = document.getElementById(elID);
