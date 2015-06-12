@@ -71,7 +71,6 @@ twitchApi.processResponse = function (data) {
     var error = twitchData.error;
     var total = twitchData._total;
     var links = twitchData._links;
-    console.log(total);
     if (!error && (total > 0)) {
         psnUserInterface.fadeOut('introScreen');
         psnUserInterface.fadeOut('errorMessage');
@@ -91,15 +90,29 @@ psnUserInterface.buildResults = function (twitchData, total, links) {
     var elPagination = document.getElementById('resultsPagination');
     var nextLink = links.next;
     var prevLink = links.prev;
-    var paginationHTML;
+    var paginationHTML = "";
     elTotal.innerHTML = "Total results: "+total;
 
-    if (prevLink) { paginationHTML += "<a class='pagination' href='"+links.prev+"'>Previous</a>"; }
-    if (nextLink) { paginationHTML += "<a class='pagination' href='"+links.next+"'>Next</a>"; }
+    if (typeof prevLink !== 'undefined') { paginationHTML += "<a id='prevBtn' class='pagination' href='"+links.prev+"'>Previous</a>"; }
+    if (typeof nextLink !== 'undefined') { paginationHTML += "<a id='nextBtn' class='pagination' href='"+links.next+"'>Next</a>"; }
+
     elPagination.innerHTML = paginationHTML;
-
+    psnUserInterface.initPaginateClick('nextBtn');
+    psnUserInterface.initPaginateClick('prevBtn');
     setTimeout(function(){ psnUserInterface.fadeOut('loadingResults'); psnUserInterface.fadeIn('resultsView');}, 2000);
+}
 
+psnUserInterface.initPaginateClick = function (btnID) {
+    var btn = document.getElementById(btnID);
+    if (btn) {
+        btn.addEventListener('click', function(event) { event.preventDefault()});
+        btn.addEventListener('click', psnUserInterface.paginationClick(btnID));
+    }
+}
+
+psnUserInterface.paginationClick = function (btnID) {
+    var paginateApiUrl = document.getElementById(btnID).getAttribute('href');
+    console.log(paginateApiUrl);
 }
 
 psnUserInterface.initSearch = function (query) {
@@ -119,7 +132,7 @@ psnUserInterface.fadeOut = function (elID) {
         element.style.opacity = op;
         element.style.filter = 'alpha(opacity=' + op * 100 + ")";
         op -= op * 0.1;
-    }, 10);
+    }, 1);
 }
 psnUserInterface.fadeIn = function (elID) {
     var element = document.getElementById(elID);

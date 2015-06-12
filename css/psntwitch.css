@@ -15,6 +15,16 @@ body {
     font-family: 'Open Sans', sans-serif;
     font-size: 13px;
 }
+
+a {
+    color: #FFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 .hidden {
     display: none;
     opacity: 0.1;
@@ -180,6 +190,7 @@ h3 {
     overflow: hidden;
     background-color: #000;
     padding: 5px 15px 5px 15px;
+    color: #ccc;
 }
 
 #resultsTotal {
@@ -192,4 +203,5 @@ h3 {
     position: relative;
     width: 45%;
     float: right;
+    text-align: right;
 }
