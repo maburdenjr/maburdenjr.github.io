@@ -46,7 +46,14 @@ twitchApi.search = function () {
         psnUserInterface.displayError('An unknown error occurred. Please try again.');
         return;
     }
+}
 
+twitchApi.paginate = function (apiURL) {
+    var apiResponse = twitchApi.jsonp(apiUrl+"&callback=jsonpCallback");
+    if (!apiResponse) {
+        psnUserInterface.displayError('An unknown error occurred. Please try again.');
+        return;
+    }
 }
 
 twitchApi.jsonp = function (apiUrl) {
@@ -63,17 +70,38 @@ twitchApi.processResponse = function (data) {
     var twitchData = JSON.parse(data);
     var error = twitchData.error;
     var total = twitchData._total;
-    if (!error) {
+    var links = twitchData._links;
+    console.log(total);
+    if (!error && (total > 0)) {
         psnUserInterface.fadeOut('introScreen');
         psnUserInterface.fadeOut('errorMessage');
+        psnUserInterface.fadeOut('resultsView');
         psnUserInterface.fadeIn('loadingResults');
+        psnUserInterface.buildResults(twitchData, total, links)
+
     } else {
         psnUserInterface.fadeOut('loadingResults');
-        psnUserInterface.displayError('An unknown error occurred. Please try again.');
+        psnUserInterface.displayError('We\'re sorry, we did not find any results for your search query.  Please try again.');
     }
 }
 
 /* UI Methods */
+psnUserInterface.buildResults = function (twitchData, total, links) {
+    var elTotal = document.getElementById('resultsTotal');
+    var elPagination = document.getElementById('resultsPagination');
+    var nextLink = links.next;
+    var prevLink = links.prev;
+    var paginationHTML;
+    elTotal.innerHTML = "Total results: "+total;
+
+    if (prevLink) { paginationHTML += "<a class='pagination' href='"+links.prev+"'>Previous</a>"; }
+    if (nextLink) { paginationHTML += "<a class='pagination' href='"+links.next+"'>Next</a>"; }
+    elPagination.innerHTML = paginationHTML;
+
+    setTimeout(function(){ psnUserInterface.fadeOut('loadingResults'); psnUserInterface.fadeIn('resultsView');}, 2000);
+
+}
+
 psnUserInterface.initSearch = function (query) {
     var searchParam = decodeURI(query);
     document.getElementById('twitchApiSearchQuery').value = searchParam;
