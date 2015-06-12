@@ -16,9 +16,7 @@ var searchQuery = getParameterByName('search');
 
 formHelpers.buildSearchParams = function () {
     var searchQuery = formHelpers.getFieldValue('twitchApiSearchQuery'),
-        searchLimit = formHelpers.getFieldValue('twitchApiSearchLimit'),
-        searchOffset = formHelpers.getFieldValue('twitchApiSearchOffset'),
-        searchParams = "search/streams?q="+searchQuery+"&limit="+searchLimit+"&ffset="+searchOffset+"&callback=jsonpCallback";
+        searchParams = "search/streams?q="+searchQuery+"&limit=20&callback=jsonpCallback";
     if(!searchQuery) {
         psnUserInterface.fadeOut('loadingResults');
         psnUserInterface.displayError('Please enter a search query in the form above.');
@@ -161,37 +159,32 @@ psnUserInterface.displayStreamInfo = function (streamObj) {
     var twitchGame = streamObj.game;
     var twitchViewers = streamObj.viewers;
     var twitchURL = streamObj.channel.url;
-    var twitchInfo = streamObj.channel.display_name + " playing " + twitchGame + " [" + twitchViewers + " viewers]";
+    var twitchInfo = twitchGame + " - " + twitchViewers + " viewers";
 
-
-    //Twitch Link
-    var streamLink = document.createElement("A");
-    streamLink.setAttribute('href', twitchURL);
-    streamLink.setAttribute('target', '_blank');
-
-    var streamContainer = document.createElement("DIV");
-    streamContainer.setAttribute("id", streamObj._id);
-    streamContainer.setAttribute("class", 'streamContainer');
-
+    var streamLink = psnUserInterface.createUiElement("A", {href: twitchURL, target: '_blank', rel: twitchURL+'/embed'});
+    var streamContainer = psnUserInterface.createUiElement("DIV", {id: streamObj._id, class: 'streamContainer'})
     var streamTitle = document.createElement("H2");
+    var streamImageContainer = psnUserInterface.createUiElement("DIV", {class: 'streamImage'});
+    var streamDetails = psnUserInterface.createUiElement("DIV", {class: 'streamDetails'});
+    var streamImage = psnUserInterface.createUiElement("IMG", {src: twitchImage});
+
     streamTitle.innerText = twitchStreamName;
-
-    var streamImageContainer = document.createElement("DIV");
-    streamImageContainer.setAttribute("class", 'streamImage');
-
-    var streamDetails = document.createElement("DIV");
-    streamDetails.setAttribute("class", "streamDetails");
     streamDetails.innerText = twitchInfo;
 
-    var streamImage = document.createElement("IMG");
-    streamImage.setAttribute('src', twitchImage);
     streamLink.appendChild(streamImage);
     streamImageContainer.appendChild(streamLink);
-
     streamContainer.appendChild(streamTitle);
     streamContainer.appendChild(streamDetails);
     streamContainer.appendChild(streamImageContainer)
     resultsContainer.appendChild(streamContainer);
+}
+
+psnUserInterface.createUiElement = function(element, attributes) {
+    var element = document.createElement(element);
+    for (var key in attributes) {
+        element.setAttribute(key, attributes[key]);
+    }
+    return element;
 }
 
 

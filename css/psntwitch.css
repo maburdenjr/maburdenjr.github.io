@@ -4,14 +4,17 @@
 }
 html {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
 }
+
 body {
     margin: 0;
-
+    min-height: 100%;
     font-family: 'Open Sans', sans-serif;
     font-size: 13px;
     background-color: #000E43;
+    background-image: radial-gradient(circle at top right,#01043B,#8BD4F1);
+
 }
 
 a {
@@ -106,7 +109,7 @@ a:hover {
 }
 
 #twitchApiSearchQuery {
-    width: 250px;
+    width: 480px;
     background-color: #303030;
     font-size: 14px;
     border: solid 1px #171717;
@@ -144,6 +147,7 @@ a:hover {
     position:relative;
     color: #FFF;
     margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 h1 {
@@ -212,12 +216,13 @@ h3 {
 
 .streamContainer {
     position: relative;
-    width: 435px;
+    width: 445px;
     margin-top: 20px;
-    margin-right: 40px;
+    margin-right: 20px;
     float: left;
-    border: 1px dotted #333;
     padding: 10px;
+    background-color: rgba(0,0,0, 0.50);
+
 }
 
 #resultsContainer .streamContainer:nth-child(even) {
@@ -232,7 +237,7 @@ h3 {
     text-overflow: ellipsis;
     font-weight: 300;
     margin-top: 0px;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 .streamImage img {
