@@ -1,0 +1,23 @@
+@media (max-width: 775px) {
+
+    .container {
+        width: auto;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    #playstationHeader {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .twitchLogo, .twitchSearchOptions {
+        display: none;
+    }
+    .twitchSearch {
+        width: 300px;
+    }
+    #twitchApiSearchQuery {
+        width: 185px;
+    }
+}

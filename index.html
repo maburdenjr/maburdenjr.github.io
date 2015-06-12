@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+    <link href="css/psntwitch.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
+    <link href="css/loader.css" rel="stylesheet">
+
+    <title>PSN | Twitch Interface</title>
+
+
+</head>
+    <body>
+        <div id="sonyHeader">
+            <a href="http://www.sony.com"><img src="images/sony-logo.jpg" alt="Sony" title="Sony"></a>
+        </div>
+        <div id="playstationHeader">
+                <div class="psLogo"><a href="http://www.playstation.com"><img src="images/ps-logo.png" alt="PlayStation" title="PlayStation"></a></div>
+                <div class="twitchSearch">
+                    <label for="twitchApiSearchQuery" class="hidden">Search Twitch</label>
+                    <input placeholder="Search query..." type="text" id="twitchApiSearchQuery" autocomplete="off">
+                    <div class="twitchSearchOptions">
+                        <select id="twitchApiSearchLimit">
+                            <option value="25">Total Results</option>
+                            <option value="10">10</option>
+                            <option value="25" selected>25</option>
+                            <option value="50">50</option>
+                            <option value="75">75</option>
+                            <option value="100">100</option>
+                        </select>
+                        <select id="twitchApiSearchOffset">
+                            <option value="25">Per Page</option>
+                            <option value="10">10</option>
+                            <option value="25" selected>25</option>
+                            <option value="50">50</option>
+                            <option value="75">75</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                    <a id="submitSearch" class="btn">Search</a>
+                </div>
+
+            <div class="twitchLogo"><a href="http://www.twitch.tv"><img src="images/twitch-logo.jpg" alt="Twitch" title="Twitch"></a></div>
+        </div>
+        <div id="twitchResults">
+            <div id="introScreen" class="container twitchUi">
+                <h1>With Twitch on PlayStation 4, you can broadcast your game with the touch of a button.</h1>
+                <p class="centered">Take a peek at what other games are broadcasting by using the search feature above.</p>
+            </div>
+            <div id="loadingResults" class="container twitchUi hidden">
+                <h1>Hang tight, we're fetching your results...</h1>
+                <div id="loader-wrapper">
+                    <div id="loader"></div>
+                </div>
+            </div>
+        </div>
+    <script src="js/psntwitch.js"></script>
+    </body>
+</html>
