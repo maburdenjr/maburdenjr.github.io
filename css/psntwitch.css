@@ -203,3 +203,44 @@ h3 {
     float: right;
     text-align: right;
 }
+
+#resultsContainer {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.streamContainer {
+    position: relative;
+    width: 435px;
+    margin-top: 20px;
+    margin-right: 40px;
+    float: left;
+    border: 1px dotted #333;
+    padding: 10px;
+}
+
+#resultsContainer .streamContainer:nth-child(even) {
+    margin-right: 0px;
+}
+
+
+.streamContainer h2 {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 300;
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+.streamImage img {
+    width: 100%;
+}
+
+.streamDetails {
+    position: relative;
+    margin-bottom: 15px;
+    color: #999;
+}
