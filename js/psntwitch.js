@@ -12,14 +12,17 @@ var twitchApi = {
 };
 
 
-//Builds query string based on current state of search form
+
+/* Form Helper Methods */
+
 formHelpers.buildSearchParams = function () {
     var searchQuery = formHelpers.getFieldValue('twitchApiSearchQuery'),
         searchLimit = formHelpers.getFieldValue('twitchApiSearchLimit'),
         searchOffset = formHelpers.getFieldValue('twitchApiSearchOffset'),
         searchParams = "search/streams?q="+searchQuery+"&limit="+searchLimit+"&ffset="+searchOffset;
     if(!searchQuery) {
-        alert('Hang tight, we need something to search for or else we will be wandering in the dark.  Please enter a search query.');
+        psnUserInterface.displayError('Please enter a search query in the form above.');
+        psnUserInterface.fadeIn('errorMessage');
         return false;
     } else {
         return encodeURI(searchParams);
@@ -33,10 +36,47 @@ formHelpers.getFieldValue = function (fieldID) {
     return fieldValue;
 }
 
+/* TwitchAPI Methods */
+
 twitchApi.search = function () {
     var apiUrl = twitchApi.baseUrl+formHelpers.buildSearchParams();
     if(!formHelpers.buildSearchParams()) return;
+    psnUserInterface.fadeOut('introScreen');
+    psnUserInterface.fadeOut('errorMessage');
     console.log(apiUrl);
+}
+
+/* UI Methods */
+psnUserInterface.fadeOut = function (elID) {
+    var element = document.getElementById(elID);
+    var op = 1;  // initial opacity
+    var timer = setInterval(function () {
+        if (op <= 0.1){
+            clearInterval(timer);
+            element.style.display = 'none';
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op -= op * 0.1;
+    }, 10);
+}
+psnUserInterface.fadeIn = function (elID) {
+    var element = document.getElementById(elID);
+    var op = 0.1;  // initial opacity
+    element.style.display = 'block';
+    var timer = setInterval(function () {
+        if (op >= 1){
+            clearInterval(timer);
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op += op * 0.1;
+    }, 10);
+}
+
+psnUserInterface.displayError = function(errorMessage) {
+    var errorContainer = document.getElementById('errorMessage');
+    errorContainer.innerHTML = "<h3 class='centered'>"+errorMessage+"</h3>";
 }
 
 psnUserInterface.searchBtn.addEventListener('click', twitchApi.search);

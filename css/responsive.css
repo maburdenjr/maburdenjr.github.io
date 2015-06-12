@@ -20,4 +20,8 @@
     #twitchApiSearchQuery {
         width: 185px;
     }
+
+    .ps4 img {
+        max-width: 200px;
+    }
 }
