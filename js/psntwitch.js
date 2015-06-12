@@ -103,46 +103,6 @@ psnUserInterface.buildResults = function (twitchData, total, links, streams) {
     setTimeout(function(){ psnUserInterface.fadeOut('loadingResults'); psnUserInterface.fadeIn('resultsView');}, 1000);
 }
 
-psnUserInterface.displayStreamInfo = function (streamObj) {
-    var resultsContainer = document.getElementById('resultsContainer');
-    var twitchImage = streamObj.preview.medium;
-    var twitchStreamName = streamObj.channel.status;
-    var twitchGame = streamObj.game;
-    var twitchViewers = streamObj.viewers;
-    var twitchURL = streamObj.channel.url;
-    var twitchInfo = streamObj.channel.display_name + " playing " + twitchGame + " [" + twitchViewers + " viewers]";
-
-
-    //Twitch Link
-    var streamLink = document.createElement("A");
-    streamLink.setAttribute('href', twitchURL);
-    streamLink.setAttribute('target', '_blank');
-
-    var streamContainer = document.createElement("DIV");
-    streamContainer.setAttribute("id", streamObj._id);
-    streamContainer.setAttribute("class", 'streamContainer');
-
-    var streamTitle = document.createElement("H2");
-    streamTitle.innerText = twitchStreamName;
-
-    var streamImageContainer = document.createElement("DIV");
-    streamImageContainer.setAttribute("class", 'streamImage');
-
-    var streamDetails = document.createElement("DIV");
-    streamDetails.setAttribute("class", "streamDetails");
-    streamDetails.innerText = twitchInfo;
-
-    var streamImage = document.createElement("IMG");
-    streamImage.setAttribute('src', twitchImage);
-    streamLink.appendChild(streamImage);
-    streamImageContainer.appendChild(streamLink);
-
-    streamContainer.appendChild(streamTitle);
-    streamContainer.appendChild(streamDetails);
-    streamContainer.appendChild(streamImageContainer)
-    resultsContainer.appendChild(streamContainer);
-}
-
 psnUserInterface.initPaginateClick = function (btnID) {
     var btn = document.getElementById(btnID);
     if (btn) {
@@ -192,6 +152,46 @@ psnUserInterface.displayError = function(errorMessage) {
     var errorContainer = document.getElementById('errorMessage');
     errorContainer.innerHTML = "<h3 class='centered'>"+errorMessage+"</h3>";
     psnUserInterface.fadeIn('errorMessage');
+}
+
+psnUserInterface.displayStreamInfo = function (streamObj) {
+    var resultsContainer = document.getElementById('resultsContainer');
+    var twitchImage = streamObj.preview.large;
+    var twitchStreamName = streamObj.channel.status;
+    var twitchGame = streamObj.game;
+    var twitchViewers = streamObj.viewers;
+    var twitchURL = streamObj.channel.url;
+    var twitchInfo = streamObj.channel.display_name + " playing " + twitchGame + " [" + twitchViewers + " viewers]";
+
+
+    //Twitch Link
+    var streamLink = document.createElement("A");
+    streamLink.setAttribute('href', twitchURL);
+    streamLink.setAttribute('target', '_blank');
+
+    var streamContainer = document.createElement("DIV");
+    streamContainer.setAttribute("id", streamObj._id);
+    streamContainer.setAttribute("class", 'streamContainer');
+
+    var streamTitle = document.createElement("H2");
+    streamTitle.innerText = twitchStreamName;
+
+    var streamImageContainer = document.createElement("DIV");
+    streamImageContainer.setAttribute("class", 'streamImage');
+
+    var streamDetails = document.createElement("DIV");
+    streamDetails.setAttribute("class", "streamDetails");
+    streamDetails.innerText = twitchInfo;
+
+    var streamImage = document.createElement("IMG");
+    streamImage.setAttribute('src', twitchImage);
+    streamLink.appendChild(streamImage);
+    streamImageContainer.appendChild(streamLink);
+
+    streamContainer.appendChild(streamTitle);
+    streamContainer.appendChild(streamDetails);
+    streamContainer.appendChild(streamImageContainer)
+    resultsContainer.appendChild(streamContainer);
 }
 
 
