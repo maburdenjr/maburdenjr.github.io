@@ -6,12 +6,13 @@
 var psnUserInterface = {
     searchBtn: document.getElementById('submitSearch'),
     backBtn: document.getElementById('viewResults')
-}
-var formHelpers = {}
+};
+
+var formHelpers = {};
 var twitchApi = {
     baseUrl: 'https://api.twitch.tv/kraken/'
 };
-var searchQuery = getParameterByName('search');
+var browserSearchQuery = getParameterByName('search');
 
 /* Form Helper Methods */
 
@@ -25,27 +26,24 @@ formHelpers.buildSearchParams = function () {
     } else {
         return encodeURI(searchParams);
     }
-
-}
+};
 
 formHelpers.getFieldValue = function (fieldID) {
-    if(!fieldID) return;
-    var fieldValue = document.getElementById(fieldID).value;
-    return fieldValue;
-}
+    if(!fieldID) {return;}
+    return document.getElementById(fieldID).value;
+};
 
 /* TwitchAPI Methods */
 
 twitchApi.search = function () {
     var apiUrl = twitchApi.baseUrl+formHelpers.buildSearchParams();
-    if(!formHelpers.buildSearchParams()) return;
+    if(!formHelpers.buildSearchParams()) {return;}
 
     var apiResponse = twitchApi.jsonp(apiUrl);
     if (!apiResponse) {
         psnUserInterface.displayError('An unknown error occurred. Please try again.');
-        return;
     }
-}
+};
 
 twitchApi.jsonp = function (apiUrl) {
     var head = document.head;
@@ -55,7 +53,7 @@ twitchApi.jsonp = function (apiUrl) {
     head.appendChild(script);
     head.removeChild(script);
     return true;
-}
+};
 
 twitchApi.processResponse = function (data) {
     var twitchData = JSON.parse(data);
@@ -69,16 +67,16 @@ twitchApi.processResponse = function (data) {
         psnUserInterface.fadeOut('errorMessage');
         psnUserInterface.fadeOut('resultsView');
         psnUserInterface.fadeIn('loadingResults');
-        psnUserInterface.buildResults(twitchData, total, links, streams)
+        psnUserInterface.buildResults(total, links, streams)
 
     } else {
         psnUserInterface.fadeOut('loadingResults');
         psnUserInterface.displayError('We\'re sorry, we did not find any results for your search query.  Please try again.');
     }
-}
+};
 
 /* UI Methods */
-psnUserInterface.buildResults = function (twitchData, total, links, streams) {
+psnUserInterface.buildResults = function (total, links, streams) {
     var elTotal = document.getElementById('resultsTotal');
     var elPagination = document.getElementById('resultsPagination');
     var nextLink = links.next;
@@ -101,7 +99,7 @@ psnUserInterface.buildResults = function (twitchData, total, links, streams) {
         }
     }
     setTimeout(function(){ psnUserInterface.fadeOut('loadingResults'); psnUserInterface.fadeIn('resultsView');}, 1000);
-}
+};
 
 psnUserInterface.initPaginateClick = function (btnID) {
     var btn = document.getElementById(btnID);
@@ -111,29 +109,28 @@ psnUserInterface.initPaginateClick = function (btnID) {
             psnUserInterface.paginationClick(btnID)
         });
     }
-}
+};
 
 psnUserInterface.paginationClick = function (btnID) {
     var paginateApiUrl = document.getElementById(btnID).getAttribute('href');
     var apiResponse = twitchApi.jsonp(paginateApiUrl+"&callback=jsonpCallback");
     if (!apiResponse) {
         psnUserInterface.displayError('An unknown error occurred. Please try again.');
-        return;
     }
-}
+};
 
 psnUserInterface.initSearch = function (query) {
-    var searchParam = decodeURI(query);
-    document.getElementById('twitchApiSearchQuery').value = searchParam;
+    document.getElementById('twitchApiSearchQuery').value = decodeURI(query);
     twitchApi.search();
-}
+};
 
 psnUserInterface.fadeOut = function (elID) {
     var element = document.getElementById(elID);
     element.style.display = 'none';
     element.style.opacity = 0;
     element.style.filter = 'alpha(opacity=0)';
-}
+};
+
 psnUserInterface.fadeIn = function (elID) {
     var element = document.getElementById(elID);
     var op = 0.1;  // initial opacity
@@ -146,13 +143,13 @@ psnUserInterface.fadeIn = function (elID) {
         element.style.filter = 'alpha(opacity=' + op * 100 + ")";
         op += op * 0.1;
     }, 10);
-}
+};
 
 psnUserInterface.displayError = function(errorMessage) {
     var errorContainer = document.getElementById('errorMessage');
     errorContainer.innerHTML = "<h3 class='centered'>"+errorMessage+"</h3>";
     psnUserInterface.fadeIn('errorMessage');
-}
+};
 
 psnUserInterface.displayStreamInfo = function (streamObj) {
     var resultsContainer = document.getElementById('resultsContainer');
@@ -164,7 +161,7 @@ psnUserInterface.displayStreamInfo = function (streamObj) {
     var twitchInfo = twitchGame + " - " + twitchViewers + " viewers";
 
     var streamLink = psnUserInterface.createUiElement("A", {class: 'modalLink', href: twitchURL, target: '_blank', rel: twitchURL+'/embed', title: twitchStreamName});
-    var streamContainer = psnUserInterface.createUiElement("DIV", {id: streamObj._id, class: 'streamContainer'})
+    var streamContainer = psnUserInterface.createUiElement("DIV", {id: streamObj._id, class: 'streamContainer'});
     var streamTitle = document.createElement("H2");
     var streamImageContainer = psnUserInterface.createUiElement("DIV", {class: 'streamImage'});
     var streamDetails = psnUserInterface.createUiElement("DIV", {class: 'streamDetails'});
@@ -177,10 +174,10 @@ psnUserInterface.displayStreamInfo = function (streamObj) {
     streamImageContainer.appendChild(streamLink);
     streamContainer.appendChild(streamTitle);
     streamContainer.appendChild(streamDetails);
-    streamContainer.appendChild(streamImageContainer)
+    streamContainer.appendChild(streamImageContainer);
     resultsContainer.appendChild(streamContainer);
     psnUserInterface.initModalLinks();
-}
+};
 
 psnUserInterface.initModalLinks = function() {
     var modalLinks = document.querySelectorAll('a.modalLink');
@@ -188,9 +185,9 @@ psnUserInterface.initModalLinks = function() {
         modalLinks[i].addEventListener('click',function(event) { event.preventDefault()});
         modalLinks[i].addEventListener('click', psnUserInterface.displayModal);
     }
-}
+};
 
-psnUserInterface.displayModal = function(e) {
+psnUserInterface.displayModal = function() {
     var embedUrl = this.rel;
     var twitchURL = this.href;
     var videoPlayer = document.getElementById('twitchPlayer');
@@ -202,15 +199,17 @@ psnUserInterface.displayModal = function(e) {
     videoChat.setAttribute('src', twitchURL+'/chat?popout=');
     psnUserInterface.fadeOut('resultsView');
     psnUserInterface.fadeIn('videoEmbed');
-}
+};
 
-psnUserInterface.createUiElement = function(element, attributes) {
-    var element = document.createElement(element);
+psnUserInterface.createUiElement = function(el, attributes) {
+    var element = document.createElement(el);
     for (var key in attributes) {
-        element.setAttribute(key, attributes[key]);
+        if(attributes.hasOwnProperty(key)) {
+            element.setAttribute(key, attributes[key]);
+        }
     }
     return element;
-}
+};
 
 psnUserInterface.hideVideoEmbed = function() {
     var videoPlayer = document.getElementById('twitchPlayer');
@@ -218,11 +217,11 @@ psnUserInterface.hideVideoEmbed = function() {
     videoPlayer.setAttribute('src', '');
     videoChat.setAttribute('src', '');
     psnUserInterface.fadeOut('videoEmbed');
-}
+};
 
 
-if (searchQuery.length) {
-    psnUserInterface.initSearch(searchQuery);
+if (browserSearchQuery.length) {
+    psnUserInterface.initSearch(browserSearchQuery);
 } else {
     psnUserInterface.fadeIn('introScreen');
 }
