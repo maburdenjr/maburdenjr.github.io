@@ -63,6 +63,7 @@ twitchApi.processResponse = function (data) {
     var total = twitchData._total;
     var links = twitchData._links;
     var streams = twitchData.streams;
+    psnUserInterface.hideVideoEmbed();
     if (!error && (total > 0)) {
         psnUserInterface.fadeOut('introScreen');
         psnUserInterface.fadeOut('errorMessage');
@@ -211,6 +212,14 @@ psnUserInterface.createUiElement = function(element, attributes) {
     return element;
 }
 
+psnUserInterface.hideVideoEmbed = function() {
+    var videoPlayer = document.getElementById('twitchPlayer');
+    var videoChat =  document.getElementById('twitchChat');
+    videoPlayer.setAttribute('src', '');
+    videoChat.setAttribute('src', '');
+    psnUserInterface.fadeOut('videoEmbed');
+}
+
 
 if (searchQuery.length) {
     psnUserInterface.initSearch(searchQuery);
@@ -221,12 +230,8 @@ if (searchQuery.length) {
 psnUserInterface.searchBtn.addEventListener('click', twitchApi.search);
 
 psnUserInterface.backBtn.addEventListener('click', function() {
-    var videoPlayer = document.getElementById('twitchPlayer');
-    var videoChat =  document.getElementById('twitchChat');
-    videoPlayer.setAttribute('src', '');
-    videoChat.setAttribute('src', '');
+    psnUserInterface.hideVideoEmbed();
     psnUserInterface.fadeIn('resultsView');
-    psnUserInterface.fadeOut('videoEmbed');
 });
 
 
