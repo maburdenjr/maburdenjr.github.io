@@ -67,7 +67,7 @@ twitchApi.processResponse = function (data) {
         psnUserInterface.fadeOut('errorMessage');
         psnUserInterface.fadeOut('resultsView');
         psnUserInterface.fadeIn('loadingResults');
-        psnUserInterface.buildResults(total, links, streams)
+        psnUserInterface.buildResults(total, links, streams);
 
     } else {
         psnUserInterface.fadeOut('loadingResults');
@@ -104,9 +104,9 @@ psnUserInterface.buildResults = function (total, links, streams) {
 psnUserInterface.initPaginateClick = function (btnID) {
     var btn = document.getElementById(btnID);
     if (btn) {
-        btn.addEventListener('click', function(event) { event.preventDefault()});
+        btn.addEventListener('click', function(event) { event.preventDefault(); });
         btn.addEventListener('click', function(){
-            psnUserInterface.paginationClick(btnID)
+            psnUserInterface.paginationClick(btnID);
         });
     }
 };
@@ -182,7 +182,7 @@ psnUserInterface.displayStreamInfo = function (streamObj) {
 psnUserInterface.initModalLinks = function() {
     var modalLinks = document.querySelectorAll('a.modalLink');
     for (var i = 0; i < modalLinks.length; i++) {
-        modalLinks[i].addEventListener('click',function(event) { event.preventDefault()});
+        modalLinks[i].addEventListener('click',function(event) { event.preventDefault(); });
         modalLinks[i].addEventListener('click', psnUserInterface.displayModal);
     }
 };
