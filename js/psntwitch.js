@@ -4,7 +4,8 @@
  */
 
 var psnUserInterface = {
-    searchBtn: document.getElementById('submitSearch')
+    searchBtn: document.getElementById('submitSearch'),
+    backBtn: document.getElementById('viewResults')
 }
 var formHelpers = {}
 var twitchApi = {
@@ -218,6 +219,16 @@ if (searchQuery.length) {
 }
 
 psnUserInterface.searchBtn.addEventListener('click', twitchApi.search);
+
+psnUserInterface.backBtn.addEventListener('click', function() {
+    var videoPlayer = document.getElementById('twitchPlayer');
+    var videoChat =  document.getElementById('twitchChat');
+    videoPlayer.setAttribute('src', '');
+    videoChat.setAttribute('src', '');
+    psnUserInterface.fadeIn('resultsView');
+    psnUserInterface.fadeOut('videoEmbed');
+});
+
 
 /* Other Goodies */
 function getParameterByName(name) {
