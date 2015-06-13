@@ -35,6 +35,12 @@ a:hover {
     text-align: center;
 }
 
+.wrapper {
+    position:relative;
+    width: 100%;
+    overflow: hidden;
+}
+
 #sonyHeader {
     position: relative;
     background-color: #000000;
@@ -248,4 +254,49 @@ h3 {
     position: relative;
     margin-bottom: 15px;
     color: #999;
+}
+
+#videoEmbed {
+    position: relative;
+    overflow: hidden;
+}
+
+#videoContainer {
+    position: relative;
+    width: 620px;
+    float: left;
+}
+
+#twitchPlayer {
+    width: 620px;
+    height: 378px;
+}
+
+#videoControls {
+    margin-bottom: 15px;
+}
+
+#videoControls h2 {
+    float: left;
+    width: 600px;
+    font-weight: 300;
+    margin: 0px;
+}
+
+.videoNav {
+    position: relative;
+    width:195px;
+    float: right;
+    text-align: right;
+}
+
+#videoChat {
+    position: relative;
+    width: 275px;
+    float: right;
+}
+
+#twitchChat {
+    width: 275px;
+    height: 378px;
 }

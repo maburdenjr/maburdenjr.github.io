@@ -161,7 +161,7 @@ psnUserInterface.displayStreamInfo = function (streamObj) {
     var twitchURL = streamObj.channel.url;
     var twitchInfo = twitchGame + " - " + twitchViewers + " viewers";
 
-    var streamLink = psnUserInterface.createUiElement("A", {href: twitchURL, target: '_blank', rel: twitchURL+'/embed'});
+    var streamLink = psnUserInterface.createUiElement("A", {class: 'modalLink', href: twitchURL, target: '_blank', rel: twitchURL+'/embed', title: twitchStreamName});
     var streamContainer = psnUserInterface.createUiElement("DIV", {id: streamObj._id, class: 'streamContainer'})
     var streamTitle = document.createElement("H2");
     var streamImageContainer = psnUserInterface.createUiElement("DIV", {class: 'streamImage'});
@@ -177,6 +177,29 @@ psnUserInterface.displayStreamInfo = function (streamObj) {
     streamContainer.appendChild(streamDetails);
     streamContainer.appendChild(streamImageContainer)
     resultsContainer.appendChild(streamContainer);
+    psnUserInterface.initModalLinks();
+}
+
+psnUserInterface.initModalLinks = function() {
+    var modalLinks = document.querySelectorAll('a.modalLink');
+    for (var i = 0; i < modalLinks.length; i++) {
+        modalLinks[i].addEventListener('click',function(event) { event.preventDefault()});
+        modalLinks[i].addEventListener('click', psnUserInterface.displayModal);
+    }
+}
+
+psnUserInterface.displayModal = function(e) {
+    var embedUrl = this.rel;
+    var twitchURL = this.href;
+    var videoPlayer = document.getElementById('twitchPlayer');
+    var videoTitle =  document.getElementById('twitchTitle');
+    var videoChat =  document.getElementById('twitchChat');
+
+    videoTitle.innerText = this.title;
+    videoPlayer.setAttribute('src', embedUrl);
+    videoChat.setAttribute('src', twitchURL+'/chat?popout=');
+    psnUserInterface.fadeOut('resultsView');
+    psnUserInterface.fadeIn('videoEmbed');
 }
 
 psnUserInterface.createUiElement = function(element, attributes) {
