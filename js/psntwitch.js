@@ -6,6 +6,7 @@
 var psnUserInterface = {
     searchBtn: document.getElementById('submitSearch'),
     backBtn: document.getElementById('viewResults'),
+    searchInput: document.getElementById('twitchApiSearchQuery'),
     resultsPage: 1
 };
 
@@ -245,6 +246,13 @@ psnUserInterface.backBtn.addEventListener('click', function() {
     psnUserInterface.hideVideoEmbed();
     psnUserInterface.fadeIn('resultsView');
 });
+
+psnUserInterface.searchInput.addEventListener('keyup', function(e) {
+    if (e.keyCode == 13) {
+        twitchApi.search();
+    }
+});
+
 
 
 /* Other Goodies */
