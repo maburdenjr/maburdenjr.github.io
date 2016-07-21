@@ -9,7 +9,9 @@ export default class Thumbnail extends Component {
 
     showFullSizeImage(imgSrc) {
        let imageElement = document.getElementById('fullImage');
+       let blurContainer = document.getElementById('blurContainer');
        imageElement.src = imgSrc;
+       blurContainer.style.backgroundImage = 'url('+imgSrc+')';
         this.props.uiTools.fadeIn('imgOverlay');
     }
 

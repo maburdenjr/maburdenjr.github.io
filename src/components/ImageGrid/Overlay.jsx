@@ -15,6 +15,7 @@ export default class Overlay extends Component {
     render () {
         return (
             <div id="imgOverlay">
+                <div id="blurContainer"></div>
                 <div className="fullImgContainer">
                     <img id="fullImage"></img>
                     <i className="closeBtn fa fa-close fa-2x fa-border" onClick={this.closeOverlay}></i>

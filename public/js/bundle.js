@@ -22081,7 +22081,9 @@
 	        key: 'showFullSizeImage',
 	        value: function showFullSizeImage(imgSrc) {
 	            var imageElement = document.getElementById('fullImage');
+	            var blurContainer = document.getElementById('blurContainer');
 	            imageElement.src = imgSrc;
+	            blurContainer.style.backgroundImage = 'url(' + imgSrc + ')';
 	            this.props.uiTools.fadeIn('imgOverlay');
 	        }
 	    }, {
@@ -22152,6 +22154,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { id: 'imgOverlay' },
+	                _react2.default.createElement('div', { id: 'blurContainer' }),
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'fullImgContainer' },
