@@ -18,10 +18,10 @@ Instagram made some breaking API changes on June 1st, 2016.  Without an approved
 
 There are quite a few features that I would have liked to include if time permmitted.
 
-*__Favorites__: The ability to click on a image in the grid and save it as a favorite.  Click on the heart icon in the header would display a sliding panel from the right that contained the thumbnails of all images that were marked as favorite. 
-*__Load More__: The ability to load more images from a search using Instagram's pagination feature.
-*__Image Details__: Display captions and tags for images.
-*__Loading Screen__: Display loading spinners while waiting for a response from the api and waiting for images to download
+* __Favorites__: The ability to click on a image in the grid and save it as a favorite.  Click on the heart icon in the header would display a sliding panel from the right that contained the thumbnails of all images that were marked as favorite. 
+* __Load More__: The ability to load more images from a search using Instagram's pagination feature.
+* __Image Details__: Display captions and tags for images.
+* __Loading Screen__: Display loading spinners while waiting for a response from the api and waiting for images to download
 
 ## Developer Setup
 
