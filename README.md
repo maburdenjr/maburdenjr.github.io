@@ -4,8 +4,9 @@
 
 ### Current Functionality
 
-* Responsive Design - uses SASS mixins to control grid layout on different devices
-* Search Feature - Tap on the search icon to bring down the search bar.  Type something in the search bar and hit enter to kick off a search.  Hit `esc` to close the search bar.
+* __Responsive Design__: uses SASS mixins to control grid layout on different devices
+* __Search Feature__: Tap on the search icon to bring down the search bar.  Type something in the search bar and hit enter to kick off a search.  Hit `esc` to close the search bar.
+* __Vanilla Javascript Ajax Call__: Simulates fetching data from an external source (see gotchas section)
 
 ### Some 'Gotchas'
 
