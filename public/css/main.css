@@ -143,14 +143,13 @@ body, html {
       filter: blur(15px);
       background-size: cover; }
     #appContainer #imgOverlay .fullImgContainer {
-      padding: 10px;
       position: relative;
       max-width: 600px;
       margin-left: auto;
-      margin-right: auto;
-      background-color: rgba(0, 0, 0, 0.75); }
+      margin-right: auto; }
       #appContainer #imgOverlay .fullImgContainer #fullImage {
-        width: 100%; }
+        width: 100%;
+        border: 1px solid #000; }
       #appContainer #imgOverlay .fullImgContainer .closeBtn {
         position: absolute;
         color: #FFF;
