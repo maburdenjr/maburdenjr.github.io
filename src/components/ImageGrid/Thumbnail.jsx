@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
-
 export default class Thumbnail extends Component {
 
     constructor(props) {
@@ -15,7 +14,6 @@ export default class Thumbnail extends Component {
     }
 
     render () {
-        console.log(this.props);
         return (
             <div className="thumbnail">
                 <img src={this.props.imageData.thumbnail_src} onClick={this.showFullSizeImage.bind(this, this.props.imageData.display_src)} />

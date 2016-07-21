@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Search from './Search.jsx';
 
-
 export default class Header extends Component {
 
     constructor(props) {
@@ -15,7 +14,6 @@ export default class Header extends Component {
     }
 
     render () {
-        console.log(this.props);
         return (
             <div id="appHeader">
                 <div className="headerBlock">
@@ -29,7 +27,6 @@ export default class Header extends Component {
                     </ul>
                 </div>
                 <Search uiTools={this.props.uiTools} instagramApi={this.props.instagramApi} />
-
             </div>
         )
     }

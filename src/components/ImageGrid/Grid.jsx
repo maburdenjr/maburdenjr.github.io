@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Thumbnail from './Thumbnail.jsx';
 
-
-
 export default class Grid extends Component {
 
     constructor(props) {
@@ -20,7 +18,6 @@ export default class Grid extends Component {
                         return (
                             <Thumbnail imageData={result} key={result.id} uiTools={uiTools} />
                         )
-
                     })
                 }
             </div>

@@ -8,7 +8,7 @@ View the working demo online at: http://maburdenjr.github.io
 
 * __Responsive Design__: uses SASS mixins to control grid layout on different devices
 * __Search Feature__: Click on the search icon to bring down the search bar.  Type something in the search bar and hit enter to kick off a search.  Hit `esc` to close the search bar.
-* __Vanilla Javascript Ajax Call__: Simulates fetching data from an external source (see gotchas section)
+* __Vanilla Javascript Ajax Call__: Simulates fetching data from an external source (not fully implemented - see gotchas section)
 * __React Goodness__: Entire app is built using ReactJs with nested components and uiTools being passed down as props where needed
 * __Image Overlay__:  Click on a thumbnail to see the full size for the image.  Click on the X to close the overlay
 
