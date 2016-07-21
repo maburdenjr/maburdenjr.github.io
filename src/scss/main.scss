@@ -1,5 +1,142 @@
 @import "reset";
+@import "mixins";
 
-body {
+body, html  {
+  font-family: 'Open Sans', sans-serif;
   height: 100%;
+  background-color: #FAFAFA;
+}
+
+#appContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  #appHeader {
+    position: fixed;
+    width: 100%;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #DBDBDB;
+    box-shadow: 1px 1px 10px #333;
+    padding: 15px;
+    z-index:1000;
+    .headerBlock {
+      position: relative;
+      width: 50%;
+      height: 50px;
+      float: left;
+      @include flexVertical();
+      h1 {
+        &.appTitle {
+          font-size: 20px;
+          font-weight: 300;
+          text-transform: uppercase;
+          span {
+            font-weight: 600;
+          }
+        }
+      }
+      h4 {
+        text-transform: uppercase;
+        color: #999999;
+      }
+      #headerMenu {
+        text-align: right;
+        li {
+          display: inline-block;
+          margin-left: 10px;
+          .headerBtn {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    #searchContainer {
+      position: absolute;
+      display: none;
+      opacity: 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 15px;
+      background-color: rgba(0,0,0, 0.50);
+      .searchField {
+        height: 50px;
+        input {
+          font-weight: 300;
+          width: 100%;
+          border: 1px solid #FFF;
+          background-color: #000;
+          border-radius: 4px;
+          padding: 10px;
+          height: 100%;
+          color: #FFF;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+  #imageGrid {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding-top:80px;
+    .thumbnail {
+      position: relative;
+      float: left;
+      width: 25%;
+      @include breakpoint('lg') {
+        width: 10%;
+      }
+      @include breakpoint('sm') {
+        width: 20%;
+      }
+      img {
+        width: 100%;
+        cursor: pointer;
+        opacity: 0.80;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  #imgOverlay {
+    display: none;
+    opacity: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.75);
+    padding: 15px;
+    z-index: 3000;
+    .fullImgContainer {
+      padding: 10px;
+      position: relative;
+      border: 1px solid #FFF;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #000;
+      #fullImage {
+          width: 100%;
+      }
+      .closeBtn {
+        position: absolute;
+        color: #FFF;
+        top:15px;
+        right: 15px;
+        cursor: pointer;
+        background-color: rgba(0,0,0, 0.5);
+        border-radius: 50%;
+        &:hover {
+          background-color: rgba(0,0,0, 1);
+        }
+      }
+    }
+  }
 }

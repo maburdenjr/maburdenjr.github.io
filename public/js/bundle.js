@@ -47,7 +47,7 @@
   \******************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/maburdenjr.github.io/src/index.jsx */1);
+	module.exports = __webpack_require__(/*! /Users/mburden/Code/maburdenjr.github.io/src/index.jsx */1);
 
 
 /***/ },
@@ -59,6 +59,10 @@
 
 	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(/*! react */ 2);
@@ -66,6 +70,22 @@
 	var _react2 = _interopRequireDefault(_react);
 	
 	var _reactDom = __webpack_require__(/*! react-dom */ 34);
+	
+	var _Header = __webpack_require__(/*! ../src/components/Header/Header.jsx */ 174);
+	
+	var _Header2 = _interopRequireDefault(_Header);
+	
+	var _Grid = __webpack_require__(/*! ../src/components/ImageGrid/Grid.jsx */ 176);
+	
+	var _Grid2 = _interopRequireDefault(_Grid);
+	
+	var _Loading = __webpack_require__(/*! ../src/components/Common/Loading.jsx */ 178);
+	
+	var _Loading2 = _interopRequireDefault(_Loading);
+	
+	var _Overlay = __webpack_require__(/*! ../src/components/ImageGrid/Overlay.jsx */ 180);
+	
+	var _Overlay2 = _interopRequireDefault(_Overlay);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -75,28 +95,103 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var App = function (_React$Component) {
-	    _inherits(App, _React$Component);
+	var App = function (_Component) {
+	    _inherits(App, _Component);
 	
-	    function App() {
+	    function App(props) {
 	        _classCallCheck(this, App);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 	    }
 	
 	    _createClass(App, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var that = this;
+	            this.instagramApi().searchApi('squarespace');
+	            window.jsonpCallback = function (data) {
+	                var instagramData = JSON.parse(data);
+	                that.setState({ instagramData: instagramData });
+	            };
+	        }
+	    }, {
+	        key: 'displayComponent',
+	        value: function displayComponent() {
+	            if (this.state) {
+	                return _Grid2.default;
+	            } else {
+	                return _Loading2.default;
+	            }
+	        }
+	    }, {
+	        key: 'userInterfaceTools',
+	        value: function userInterfaceTools() {
+	            return {
+	                fadeIn: function fadeIn(elementId) {
+	                    var element = document.getElementById(elementId);
+	                    var op = 0.1; // initial opacity
+	                    element.style.display = 'block';
+	                    var timer = setInterval(function () {
+	                        if (op >= 1) {
+	                            clearInterval(timer);
+	                        }
+	                        element.style.opacity = op;
+	                        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+	                        op += op * 0.1;
+	                    }, 10);
+	                },
+	                fadeOut: function fadeOut(elementId) {
+	                    // ToDo: Make this fade out instead of just disappearing
+	                    var element = document.getElementById(elementId);
+	                    element.style.display = 'none';
+	                    element.style.opacity = 0;
+	                    element.style.filter = 'alpha(opacity=0)';
+	                }
+	            };
+	        }
+	    }, {
+	        key: 'instagramApi',
+	        value: function instagramApi() {
+	            return {
+	                searchApi: function searchApi(query) {
+	                    if (query) {
+	                        var apiUrl = './public/data/instagram.js';
+	                        var instagramData = this.jsonP(apiUrl);
+	                    }
+	                },
+	                jsonP: function jsonP(apiUrl) {
+	                    /* Instagram changed their API on June 1, 2016 so this code simulates a jsonp request with callback.
+	                       public/data/instagram.js simulates an Instagram api response wrapped in a callback
+	                     */
+	                    var head = document.head;
+	                    var script = document.createElement("script");
+	
+	                    script.setAttribute("src", apiUrl);
+	                    head.appendChild(script);
+	                    head.removeChild(script);
+	                    return true;
+	                }
+	            };
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var GridWrapper = this.displayComponent();
 	            return _react2.default.createElement(
-	                'p',
-	                null,
-	                ' Hello React!'
+	                'div',
+	                { id: 'appContainer' },
+	                _react2.default.createElement(_Header2.default, { uiTools: this.userInterfaceTools(), instagramApi: this.instagramApi() }),
+	                _react2.default.createElement(GridWrapper, { uiTools: this.userInterfaceTools(), data: this.state }),
+	                _react2.default.createElement(_Overlay2.default, { uiTools: this.userInterfaceTools() })
 	            );
 	        }
 	    }]);
 	
 	    return App;
-	}(_react2.default.Component);
+	}(_react.Component);
+	
+	exports.default = App;
+	
 	
 	(0, _reactDom.render)(_react2.default.createElement(App, null), document.getElementById('app'));
 
@@ -21644,6 +21739,435 @@
 	var ReactMount = __webpack_require__(/*! ./ReactMount */ 165);
 	
 	module.exports = ReactMount.renderSubtreeIntoContainer;
+
+/***/ },
+/* 173 */,
+/* 174 */
+/*!******************************************!*\
+  !*** ./src/components/Header/Header.jsx ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(/*! react-dom */ 34);
+	
+	var _Search = __webpack_require__(/*! ./Search.jsx */ 175);
+	
+	var _Search2 = _interopRequireDefault(_Search);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Header = function (_Component) {
+	    _inherits(Header, _Component);
+	
+	    function Header(props) {
+	        _classCallCheck(this, Header);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Header).call(this, props));
+	
+	        _this.showSearch = _this.showSearch.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(Header, [{
+	        key: 'showSearch',
+	        value: function showSearch() {
+	            this.props.uiTools.fadeIn('searchContainer');
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            console.log(this.props);
+	            return _react2.default.createElement(
+	                'div',
+	                { id: 'appHeader' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'headerBlock' },
+	                    _react2.default.createElement(
+	                        'h1',
+	                        { className: 'appTitle' },
+	                        'Slick',
+	                        _react2.default.createElement(
+	                            'span',
+	                            null,
+	                            'Gram'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'h4',
+	                        null,
+	                        'Instagram Viewer'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'headerBlock' },
+	                    _react2.default.createElement(
+	                        'ul',
+	                        { id: 'headerMenu' },
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            _react2.default.createElement(
+	                                'a',
+	                                { id: 'favoritesBtn', className: 'headerBtn' },
+	                                _react2.default.createElement('i', { className: 'fa fa-heart-o fa-2x fa-border' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'li',
+	                            null,
+	                            _react2.default.createElement(
+	                                'a',
+	                                { id: 'searchBtn', className: 'headerBtn', onClick: this.showSearch },
+	                                _react2.default.createElement('i', { className: 'fa fa-search fa-2x fa-border' })
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(_Search2.default, { uiTools: this.props.uiTools, instagramApi: this.props.instagramApi })
+	            );
+	        }
+	    }]);
+	
+	    return Header;
+	}(_react.Component);
+	
+	exports.default = Header;
+
+/***/ },
+/* 175 */
+/*!******************************************!*\
+  !*** ./src/components/Header/Search.jsx ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(/*! react-dom */ 34);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Search = function (_Component) {
+	    _inherits(Search, _Component);
+	
+	    function Search(props) {
+	        _classCallCheck(this, Search);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Search).call(this, props));
+	
+	        _this.handleKeyPress = _this.handleKeyPress.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(Search, [{
+	        key: 'handleKeyPress',
+	        value: function handleKeyPress(event) {
+	            switch (event.keyCode) {
+	                case 13:
+	                    var query = event.target.value;
+	                    this.props.instagramApi.searchApi(query);
+	                case 27:
+	                    this.props.uiTools.fadeOut('searchContainer');
+	                default:
+	                    return true;
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { id: 'searchContainer' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'searchField' },
+	                    _react2.default.createElement('input', { className: 'formInput', type: 'text', placeholder: 'Search', onKeyUp: this.handleKeyPress })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Search;
+	}(_react.Component);
+	
+	exports.default = Search;
+
+/***/ },
+/* 176 */
+/*!*******************************************!*\
+  !*** ./src/components/ImageGrid/Grid.jsx ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(/*! react-dom */ 34);
+	
+	var _Thumbnail = __webpack_require__(/*! ./Thumbnail.jsx */ 179);
+	
+	var _Thumbnail2 = _interopRequireDefault(_Thumbnail);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Grid = function (_Component) {
+	    _inherits(Grid, _Component);
+	
+	    function Grid(props) {
+	        _classCallCheck(this, Grid);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Grid).call(this, props));
+	    }
+	
+	    _createClass(Grid, [{
+	        key: 'render',
+	        value: function render() {
+	            var instagramImages = this.props.data.instagramData.tag.media.nodes;
+	            var uiTools = this.props.uiTools;
+	            return _react2.default.createElement(
+	                'div',
+	                { id: 'imageGrid' },
+	                instagramImages.map(function (result) {
+	                    return _react2.default.createElement(_Thumbnail2.default, { imageData: result, key: result.id, uiTools: uiTools });
+	                })
+	            );
+	        }
+	    }]);
+	
+	    return Grid;
+	}(_react.Component);
+	
+	exports.default = Grid;
+
+/***/ },
+/* 177 */,
+/* 178 */
+/*!*******************************************!*\
+  !*** ./src/components/Common/Loading.jsx ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(/*! react-dom */ 34);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Loading = function (_Component) {
+	    _inherits(Loading, _Component);
+	
+	    function Loading(props) {
+	        _classCallCheck(this, Loading);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Loading).call(this, props));
+	    }
+	
+	    _createClass(Loading, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('div', null);
+	        }
+	    }]);
+	
+	    return Loading;
+	}(_react.Component);
+	
+	exports.default = Loading;
+
+/***/ },
+/* 179 */
+/*!************************************************!*\
+  !*** ./src/components/ImageGrid/Thumbnail.jsx ***!
+  \************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(/*! react-dom */ 34);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Thumbnail = function (_Component) {
+	    _inherits(Thumbnail, _Component);
+	
+	    function Thumbnail(props) {
+	        _classCallCheck(this, Thumbnail);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Thumbnail).call(this, props));
+	    }
+	
+	    _createClass(Thumbnail, [{
+	        key: 'showFullSizeImage',
+	        value: function showFullSizeImage(imgSrc) {
+	            var imageElement = document.getElementById('fullImage');
+	            imageElement.src = imgSrc;
+	            this.props.uiTools.fadeIn('imgOverlay');
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            console.log(this.props);
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'thumbnail' },
+	                _react2.default.createElement('img', { src: this.props.imageData.thumbnail_src, onClick: this.showFullSizeImage.bind(this, this.props.imageData.display_src) })
+	            );
+	        }
+	    }]);
+	
+	    return Thumbnail;
+	}(_react.Component);
+	
+	exports.default = Thumbnail;
+
+/***/ },
+/* 180 */
+/*!**********************************************!*\
+  !*** ./src/components/ImageGrid/Overlay.jsx ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(/*! react-dom */ 34);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Overlay = function (_Component) {
+	    _inherits(Overlay, _Component);
+	
+	    function Overlay(props) {
+	        _classCallCheck(this, Overlay);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Overlay).call(this, props));
+	
+	        _this.closeOverlay = _this.closeOverlay.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(Overlay, [{
+	        key: 'closeOverlay',
+	        value: function closeOverlay() {
+	            this.props.uiTools.fadeOut('imgOverlay');
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { id: 'imgOverlay' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'fullImgContainer' },
+	                    _react2.default.createElement('img', { id: 'fullImage' }),
+	                    _react2.default.createElement('i', { className: 'closeBtn fa fa-close fa-2x fa-border', onClick: this.closeOverlay })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Overlay;
+	}(_react.Component);
+	
+	exports.default = Overlay;
 
 /***/ }
 /******/ ]);
