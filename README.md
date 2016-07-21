@@ -2,6 +2,8 @@
 
 ## About SlickGram
 
+View the working demo online at: http://maburdenjr.github.io
+
 ### Current Functionality
 
 * __Responsive Design__: uses SASS mixins to control grid layout on different devices
