@@ -47,7 +47,7 @@
   \******************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! /Users/mburden/Code/maburdenjr.github.io/src/index.jsx */1);
+	module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/maburdenjr.github.io/src/index.jsx */1);
 
 
 /***/ },
@@ -71,19 +71,19 @@
 	
 	var _reactDom = __webpack_require__(/*! react-dom */ 34);
 	
-	var _Header = __webpack_require__(/*! ../src/components/Header/Header.jsx */ 174);
+	var _Header = __webpack_require__(/*! ../src/components/Header/Header.jsx */ 173);
 	
 	var _Header2 = _interopRequireDefault(_Header);
 	
-	var _Grid = __webpack_require__(/*! ../src/components/ImageGrid/Grid.jsx */ 176);
+	var _Grid = __webpack_require__(/*! ../src/components/ImageGrid/Grid.jsx */ 175);
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
-	var _Loading = __webpack_require__(/*! ../src/components/Common/Loading.jsx */ 178);
+	var _Loading = __webpack_require__(/*! ../src/components/Common/Loading.jsx */ 177);
 	
 	var _Loading2 = _interopRequireDefault(_Loading);
 	
-	var _Overlay = __webpack_require__(/*! ../src/components/ImageGrid/Overlay.jsx */ 180);
+	var _Overlay = __webpack_require__(/*! ../src/components/ImageGrid/Overlay.jsx */ 178);
 	
 	var _Overlay2 = _interopRequireDefault(_Overlay);
 	
@@ -21741,8 +21741,7 @@
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
 /***/ },
-/* 173 */,
-/* 174 */
+/* 173 */
 /*!******************************************!*\
   !*** ./src/components/Header/Header.jsx ***!
   \******************************************/
@@ -21762,7 +21761,7 @@
 	
 	var _reactDom = __webpack_require__(/*! react-dom */ 34);
 	
-	var _Search = __webpack_require__(/*! ./Search.jsx */ 175);
+	var _Search = __webpack_require__(/*! ./Search.jsx */ 174);
 	
 	var _Search2 = _interopRequireDefault(_Search);
 	
@@ -21853,7 +21852,7 @@
 	exports.default = Header;
 
 /***/ },
-/* 175 */
+/* 174 */
 /*!******************************************!*\
   !*** ./src/components/Header/Search.jsx ***!
   \******************************************/
@@ -21927,7 +21926,7 @@
 	exports.default = Search;
 
 /***/ },
-/* 176 */
+/* 175 */
 /*!*******************************************!*\
   !*** ./src/components/ImageGrid/Grid.jsx ***!
   \*******************************************/
@@ -21947,7 +21946,7 @@
 	
 	var _reactDom = __webpack_require__(/*! react-dom */ 34);
 	
-	var _Thumbnail = __webpack_require__(/*! ./Thumbnail.jsx */ 179);
+	var _Thumbnail = __webpack_require__(/*! ./Thumbnail.jsx */ 176);
 	
 	var _Thumbnail2 = _interopRequireDefault(_Thumbnail);
 	
@@ -21989,58 +21988,7 @@
 	exports.default = Grid;
 
 /***/ },
-/* 177 */,
-/* 178 */
-/*!*******************************************!*\
-  !*** ./src/components/Common/Loading.jsx ***!
-  \*******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(/*! react-dom */ 34);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Loading = function (_Component) {
-	    _inherits(Loading, _Component);
-	
-	    function Loading(props) {
-	        _classCallCheck(this, Loading);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Loading).call(this, props));
-	    }
-	
-	    _createClass(Loading, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement('div', null);
-	        }
-	    }]);
-	
-	    return Loading;
-	}(_react.Component);
-	
-	exports.default = Loading;
-
-/***/ },
-/* 179 */
+/* 176 */
 /*!************************************************!*\
   !*** ./src/components/ImageGrid/Thumbnail.jsx ***!
   \************************************************/
@@ -22103,7 +22051,57 @@
 	exports.default = Thumbnail;
 
 /***/ },
-/* 180 */
+/* 177 */
+/*!*******************************************!*\
+  !*** ./src/components/Common/Loading.jsx ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(/*! react-dom */ 34);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Loading = function (_Component) {
+	    _inherits(Loading, _Component);
+	
+	    function Loading(props) {
+	        _classCallCheck(this, Loading);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Loading).call(this, props));
+	    }
+	
+	    _createClass(Loading, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('div', null);
+	        }
+	    }]);
+	
+	    return Loading;
+	}(_react.Component);
+	
+	exports.default = Loading;
+
+/***/ },
+/* 178 */
 /*!**********************************************!*\
   !*** ./src/components/ImageGrid/Overlay.jsx ***!
   \**********************************************/
