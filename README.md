@@ -38,4 +38,4 @@ $ npm run dev
 
 ## Screenshots
 
-![Grid view + photo view](https://github.com/maburdenjr/maburdenjr.github.io/blob/master/src/images/screenshot.jpg)
+![Grid view and photo view](https://github.com/maburdenjr/maburdenjr.github.io/blob/master/src/images/screenshot.jpg)
